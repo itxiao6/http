@@ -12,7 +12,8 @@
   ],
   "require": {
     "php": ">=5.6.0",
-    "itxiao6/session":"dev-master"
+    "itxiao6/session":"dev-master",
+    "itxiao6/upload":"dev-master"
   },
   "require-dev": {
   },
