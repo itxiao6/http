@@ -1,15 +1,37 @@
 <?php
-namespace Itxiao6\Tools;
+namespace Itxiao6\Http\Tools;
 /**
  * 请求类
  * Class Request
- * @package Itxiao6\Tools
+ * @package Itxiao6\Http\Tools
  */
 class Request
 {
-    protected function __construct()
+    /**
+     * 请求对象
+     * @var null
+     */
+    protected $request = null;
+
+    /**
+     * 构造方法
+     * Request constructor.
+     * @param $request
+     */
+    public function __construct($request)
     {
 
+//        # 获取GET 数据
+//        $this -> get_param($request -> get);
+//        # 获取SERVER数据
+//        $this -> server_param($request -> server);
+//        # 获取POST 数据
+//        $this -> post_param($request -> post);
+//        # 获取COOKIE 数据
+//        $this -> cookie_param($request -> cookie);
+//        # 获取上传的文件数据
+//        $this -> files_param($request -> files);
+        $this -> request = $request;
     }
 
     /**
