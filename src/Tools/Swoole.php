@@ -213,6 +213,11 @@ class Swoole
      */
     protected static $memory_limit = '128M';
     /**
+     * 启动应用
+     * @var \Closure|null
+     */
+    protected $app_start = null;
+    /**
      * WebServer 类 构造方法
      * @param string $host
      * @param int $port
@@ -287,12 +292,37 @@ class Swoole
     }
 
     /**
+     * @param $event
+     * @param $fun
+     */
+    public function set_event($event,$fun)
+    {
+        return self::$server -> on($event,$fun);
+    }
+
+    /**
      * 启动
+     * @param null $onRequest
      */
     public function start($onRequest = null)
     {
+        if($onRequest != null){
+            $this -> app_start = $onRequest;
+        }
         # 启动server
         self::$server -> start();
+    }
+
+    /**
+     * 设置参数
+     */
+    public function set_param($key,$value)
+    {
+        if(is_array($key)){
+            return self::$server -> set($key);
+        }else{
+            return self::$server -> set([$key=>$value]);
+        }
     }
     /**
      * 启动时执行
@@ -301,7 +331,10 @@ class Swoole
     {
         echo "Swoole http server is started at http://".self::$host.":".self::$port."\n";
     }
-    # 当服务结束的时候
+
+    /**
+     * 当服务结束的时候
+     */
     public function onClose()
     {
         echo "Swoole http server Close\n";
@@ -322,22 +355,14 @@ class Swoole
         self::$request = new Request($request);
         # 实例化响应
         self::$response = new Response($response);
+        # 判断应用是否设置逻辑
+        if($this -> app_start === null){
+            # 设置默认响应
+            $this -> app_start = function($request,$response){$response -> end('Hello World');};
+        }
+        # 获取启动函数
+        $app_start = $this -> app_start;
         # 启动应用
-        $this -> app_start(self::$request,self::$response);
-    }
-    /**
-     * 启动应用
-     * 框架内继承 重写本方法 即可
-     * @param $request
-     * @param $response
-     */
-    public function app_start($request,$response)
-    {
-        $response -> dump(function() use ($response,$request){
-            echo '<pre>';
-            var_dump($request);
-            echo '</pre>';
-        });
-        $response -> end();
+        $app_start(self::$request,self::$response);
     }
 }
