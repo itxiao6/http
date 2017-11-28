@@ -1,11 +1,11 @@
 <?php
 namespace Itxiao6\Http\Tools;
 /**
- * GET 请求数据
- * Class Get
+ * 请求头
+ * Class Header
  * @package Itxiao6\Http\Tools
  */
-class Get
+class Header
 {
 
 }

@@ -1,12 +1,10 @@
 <?php
-namespace Itixao6\Http\Tools;
-use Itxiao6\Http\Tools\Request;
-use Itxiao6\Http\Tools\Response;
-
+namespace Itxiao6\Http\Tools;
+use swoole_http_server;
 /**
  * Swoole 扩展
  * Class Swoole
- * @package Itixao6\Http\Tools
+ * @package Itxiao6\Http\Tools
  */
 class Swoole
 {
@@ -232,7 +230,7 @@ class Swoole
         # 设置PHP运行时 最大内存
         ini_set('memory_limit', self::$memory_limit);
         # 创建server
-        self::$server = new \swoole_http_server(self::$host,self::$port);
+        self::$server = new swoole_http_server(self::$host,self::$port);
         # 重定向Worker进程的文件系统根目录
         if(self::$chroot != null){
             $param['chroot'] = self::$chroot;
@@ -335,14 +333,11 @@ class Swoole
      */
     public function app_start($request,$response)
     {
-        $response -> write('<pre>');
         $response -> dump(function() use ($response,$request){
+            echo '<pre>';
             var_dump($request);
+            echo '</pre>';
         });
-        $response -> write('</pre>');
         $response -> end();
     }
 }
-require './vendor/autoload.php';
-$http_server = new \Itixao6\Http\Tools\Swoole('127.0.0.1',9501);
-$http_server -> start();
