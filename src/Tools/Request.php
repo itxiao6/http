@@ -61,6 +61,8 @@ class Request
             $this -> header = new Header($request -> header);
             # 实例化cookie
             $this -> cookie = new Cookie($request -> cookie);
+            # 文件上传头
+            $this -> files = new Files($request -> files);
             # 获取请求
             $this -> request = $request;
         }else{
@@ -96,6 +98,42 @@ class Request
     public function get_cookie()
     {
         return $this -> cookie -> get_cookie(...func_get_args());
+    }
+
+    /**
+     * 获取uri
+     * @return null|object
+     */
+    public function get_uri()
+    {
+        return $this -> server -> get_uri(...func_get_args());
+    }
+
+    /**
+     * 获取请求的方法
+     * @return mixed
+     */
+    public function get_request_method()
+    {
+        return $this -> server -> request_method(...func_get_args());
+    }
+
+    /**
+     * 获取请求url
+     * @return null|object
+     */
+    public function get_url()
+    {
+        return $this -> request;
+    }
+
+    /**
+     * 获取上传文件
+     * @return array|null|object
+     */
+    public function get_files()
+    {
+        return $this -> files -> get_files();
     }
 
     /**
