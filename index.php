@@ -3,24 +3,33 @@ require __DIR__.'/vendor/autoload.php';
 use Itxiao6\Session\Session;
 use Itxiao6\Http\Http;
 # 获取SWOOLE 实例
-$http_server = Http::get_swoole('127.0.0.1',9501);
+$http_server = Http::get_swoole('127.0.0.1',9502);
 # 设置静态文档根目录
 $http_server -> set_param('document_root',__DIR__.'/html/');
 // 设置存储介质
-Session::set_driver('Local'); // 默认为 Local
+//Session::set_driver('Local'); // 默认为 Local
 // 启动会话
-Session::session_start(__DIR__.'/session');
+//Session::session_start(__DIR__.'/session');
 # 启动HTTP SERVER
 $http_server -> start(function($request,$response){
     # 打印数据
     $response -> dump(function() use($request,$response){
         echo "<pre>";
         # 设置request
-        Session::set_request($request -> get_request());
+//        Session::set_request($request -> get_request());
         # 设置response
-        Session::set_response($response -> get_response());
+//        Session::set_response($response -> get_response());
+        # 保存session
+//        Session::save();
+        # 获取session 全部内容
+//        var_dump(Session::get());
+        # 获取session 指定内容
+//        var_dump(Session::get('name'));
+
+
+
         # 设置cookie
-        Session::set('name','戒尺');
+//        Session::set('name','戒尺');
         # 获取全部COOKIE
 //        var_dump($request -> get_cookie());
         # 获取置顶COOKIE
