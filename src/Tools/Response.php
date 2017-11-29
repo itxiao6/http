@@ -123,6 +123,26 @@ class Response
             self::send_http_status($code);
         }
     }
+
+    /**
+     * 获取响应
+     * @return null|object
+     */
+    public function get_response()
+    {
+        return $this -> response;
+    }
+    /**
+     * 设置cookie
+     */
+    public function set_cookie()
+    {
+        if(PHP_SAPI === 'cli'){
+            return $this -> response -> cookie(...func_get_args());
+        }else{
+            return setcookie(...func_get_args());
+        }
+    }
     /**
      * 发送HTTP状态
      * @param integer $code 状态码

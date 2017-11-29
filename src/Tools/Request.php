@@ -89,4 +89,22 @@ class Request
         }
     }
 
+    /**
+     * 装饰COOKIE
+     * @return mixed
+     */
+    public function get_cookie()
+    {
+        return $this -> cookie -> get_cookie(...func_get_args());
+    }
+
+    /**
+     * 获取request
+     * @return null|object
+     */
+    public function get_request()
+    {
+        return $this -> request;
+    }
+
 }
